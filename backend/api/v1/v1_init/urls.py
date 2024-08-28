@@ -1,6 +1,10 @@
-from django.urls import path
+from django.urls import re_path
 from . import views
 
 urlpatterns = [
-    path('hello/', views.hello),
+    re_path(
+        r"^(?P<version>(v1))/health/check",
+        views.health_check,
+        name="health_check",
+    ),
 ]

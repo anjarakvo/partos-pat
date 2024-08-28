@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from os import environ
 from pathlib import Path
+from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -21,17 +22,21 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-wvnvplu5(*=%v6qm0(^dto0rv%^(he=7ri%x@p1^m*f%ftb$_h"
+SECRET_KEY = "django-insecure-c!lt^t7ik*uo$u!qne=9qjif9y$6u+_snt_%*r6!shj6rd4xgb"
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = environ.get("DEBUG", False)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    "api.v1.v1_init",
+    "rest_framework",
+    "rest_framework_simplejwt",
+    "drf_spectacular",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -126,3 +131,42 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# REST_FRAMEWORK SETTINGS
+# https://www.django-rest-framework.org/api-guide/settings/
+
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+    ],
+    "DEFAULT_VERSIONING_CLASS": "rest_framework.versioning.URLPathVersioning",
+    "DATE_FORMAT": "%d-%m-%Y",
+    "DEFAULT_VERSION": "v1",
+    "DATETIME_FORMAT": "%Y-%m-%dT%H:%M:%S%z",
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.LimitOffsetPagination",
+    "PAGE_SIZE": 10,
+}
+
+# DRF_SPECTACULAR SETTINGS
+# https://drf-spectacular.readthedocs.io/en/latest/settings.html
+
+SPECTACULAR_SETTINGS = {
+    "TITLE": "partos_pat",
+    "DESCRIPTION": "API for partos_pat",
+    "VERSION": "1.0.0",
+    "SORT_OPERATIONS": False,
+    "SERVE_INCLUDE_SCHEMA": False,
+    "COMPONENT_SPLIT_REQUEST": True,
+}
+
+# SIMPLE_JWT SETTINGS
+# https://django-rest-framework-simplejwt.readthedocs.io/en/latest/settings.html
+
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(hours=12),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
+    "AUTH_TOKEN_CLASSES": {
+        "rest_framework_simplejwt.tokens.AccessToken",
+    },
+}
