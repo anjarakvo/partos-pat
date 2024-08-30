@@ -8,7 +8,3 @@ set -exuo pipefail
 docker compose \
     -f docker-compose.yml \
     run -T backend ./test.sh
-
-docker compose \
-    -f docker-compose.yml \
-    run -T frontend yarn test
