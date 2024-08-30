@@ -30,5 +30,8 @@
     "postcss": "^8",
     "prettier": "^3.3.3",
     "tailwindcss": "^3.4.1"
+  },
+  "resolutions": {
+    "string-width": "4.2.3"
   }
 }
