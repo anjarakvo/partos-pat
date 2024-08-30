@@ -10,4 +10,9 @@ describe("HomePage", () => {
 
     expect(nextjsLogo).toBeInTheDocument();
   });
+
+  it("renders correctly & match with the snapshot", () => {
+    const { container } = render(<Home />);
+    expect(container).toMatchSnapshot();
+  });
 });
