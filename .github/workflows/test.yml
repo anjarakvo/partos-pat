@@ -26,5 +26,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Test
+        env:
+          ALL_CHANGED_FILES: ${{ steps.changed-files.outputs.all_changed_files }}
         run: |
           ./ci/test.sh
