@@ -12,6 +12,17 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
+      - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@v41
+
+      - name: List all changed files
+        env:
+          ALL_CHANGED_FILES: ${{ steps.changed-files.outputs.all_changed_files }}
+        run: |
+          for file in "$ALL_CHANGED_FILES"; do
+            echo "$file was changed"
+          done
       - name: Checkout
         uses: actions/checkout@v4
       - name: Test
