@@ -10,3 +10,4 @@ WITH OWNER = akvo
 \c partos_pat
 
 CREATE EXTENSION IF NOT EXISTS ltree WITH SCHEMA public;
+ALTER USER akvo CREATEDB;
