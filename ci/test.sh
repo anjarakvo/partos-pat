@@ -5,6 +5,15 @@
 
 set -exuo pipefail
 
+[[ "${CI_BRANCH}" ==  "gh-pages" ]] && { echo "GH Pages update. Skip all"; exit 0; }
+
+#Detect tag for prod/staging deployment
+tag_pattern="^[0-9]+\.[0-9]+\.[0-9]+$"
+if [[ "${CI_BRANCH}" =~ $tag_pattern && -z "${CI_TAG}" ]]; then
+    echo "This commit processed on Release CI. Skip all"
+    exit 0
+fi
+
 BACKEND_CHANGES=0
 FRONTEND_CHANGES=0
 COMMIT_CONTENT="${ALL_CHANGED_FILES}"
@@ -19,8 +28,14 @@ then
     FRONTEND_CHANGES=1
 fi
 
+if [[ "${CI_TAG}" =~ $tag_pattern || "${CI_BRANCH}" ==  "main" && "${CI_PULL_REQUEST}" !=  "true" ]];
+then
+    BACKEND_CHANGES=1
+    FRONTEND_CHANGES=1
+fi
+
 frontend_build () {
-    dc -f docker-compose.yml run \
+    docker compose -f docker-compose.yml run \
        --rm \
        --no-deps \
        frontend \
