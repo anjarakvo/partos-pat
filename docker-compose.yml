@@ -26,6 +26,8 @@ services:
       - DB_HOST=db
       - DEBUG=True
       - SECRET_KEY=secret
+      # env vars for coveralls
+      - COVERALLS_REPO_TOKEN=${COVERALLS_REPO_TOKEN:-}
     depends_on:
       - db
   frontend:
