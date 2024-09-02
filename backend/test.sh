@@ -18,6 +18,7 @@ coverage combine --rcfile=./.coveragerc
 coverage report -m --rcfile=./.coveragerc
 
 if [[ -n "${COVERALLS_REPO_TOKEN:-}" ]] ; then
+  cp -r /app/.git /app/backend/.git
   coveralls
 fi
 
