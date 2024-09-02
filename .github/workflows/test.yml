@@ -49,5 +49,6 @@ jobs:
           CI_PULL_REQUEST: ${{ env.PULL_REQUEST_EVENT }}
           ALL_CHANGED_FILES: ${{ steps.changed-files.outputs.all_changed_files }}
           COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
+          DBDOCS_TOKEN: ${{ secrets.DBDOCS_TOKEN }}
         run: |
           ./ci/test.sh
