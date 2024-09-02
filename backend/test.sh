@@ -18,6 +18,8 @@ coverage combine --rcfile=./.coveragerc
 coverage report -m --rcfile=./.coveragerc
 
 if [[ -n "${COVERALLS_REPO_TOKEN:-}" ]] ; then
+  echo "Uploading coverage to coveralls"
+  ls -al /app
   coveralls
 fi
 
