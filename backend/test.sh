@@ -20,3 +20,5 @@ coverage report -m --rcfile=./.coveragerc
 if [[ -n "${COVERALLS_REPO_TOKEN:-}" ]] ; then
   coveralls
 fi
+
+./manage.py dbml >> db.dbml
