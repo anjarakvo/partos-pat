@@ -19,7 +19,7 @@ coverage report -m --rcfile=./.coveragerc
 
 if [[ -n "${COVERALLS_REPO_TOKEN:-}" ]] ; then
   export GIT_DISCOVERY_ACROSS_FILESYSTEM=1
-  apt install git
+  git config --global --add safe.directory /app
   echo "Uploading coverage to coveralls"
   coveralls
 fi
