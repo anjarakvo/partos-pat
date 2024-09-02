@@ -31,6 +31,6 @@ jobs:
           CI_TAG: ""
           CI_PULL_REQUEST: ${{ env.PULL_REQUEST_EVENT }}
           ALL_CHANGED_FILES: ${{ steps.changed-files.outputs.all_changed_files }}
-          COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_PARTOS_PAT_TOKEN }}
+          COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
         run: |
           ./ci/test.sh
