@@ -34,7 +34,7 @@ then
     FRONTEND_CHANGES=1
 fi
 
-frontend_build () {
+frontend_test () {
     docker compose -f docker-compose.yml run \
        --rm \
        --no-deps \
@@ -42,7 +42,7 @@ frontend_build () {
        sh test.sh
 }
 
-backend_build () {
+backend_test () {
     docker compose \
         -f docker-compose.yml \
         run -T backend ./test.sh
@@ -50,16 +50,16 @@ backend_build () {
 
 if [[ ${FRONTEND_CHANGES} == 1 ]];
 then
-    echo "================== * FRONTEND BUILD * =================="
-    frontend_build
+    echo "================== * FRONTEND TEST * =================="
+    frontend_test
 else
-    echo "No Changes detected for frontend -- SKIP BUILD"
+    echo "No Changes detected for frontend -- SKIP TEST"
 fi
 
 if [[ ${BACKEND_CHANGES} == 1 ]];
 then
-    echo "================== * BACKEND BUILD * =================="
-    backend_build
+    echo "================== * BACKEND TEST * =================="
+    backend_test
 else
-    echo "No Changes detected for backend -- SKIP BUILD"
+    echo "No Changes detected for backend -- SKIP TEST"
 fi
