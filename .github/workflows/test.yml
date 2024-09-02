@@ -14,6 +14,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Set short git commit SHA
         id: vars
@@ -47,6 +49,7 @@ jobs:
           CI_BRANCH: ${{ github.ref_name }}
           CI_TAG: ""
           CI_PULL_REQUEST: ${{ env.PULL_REQUEST_EVENT }}
+          COMPOSE_INTERACTIVE_NO_CLI: 1
           ALL_CHANGED_FILES: ${{ steps.changed-files.outputs.all_changed_files }}
           COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
           DBDOCS_TOKEN: ${{ secrets.DBDOCS_TOKEN }}
