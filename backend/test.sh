@@ -19,8 +19,9 @@ coverage report -m --rcfile=./.coveragerc
 
 if [[ -n "${COVERALLS_REPO_TOKEN:-}" ]] ; then
   echo "Uploading coverage to coveralls"
-  ls -al /app
+  cd /app
   coveralls
+  cd /app/backend
 fi
 
 echo "Generate Django DBML"
