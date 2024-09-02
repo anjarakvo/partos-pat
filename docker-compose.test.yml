@@ -15,10 +15,10 @@ services:
       - 5432:5432
   backend:
     image: python:3.9
-    working_dir: /app
+    working_dir: /app/backend
     command: ["./start.sh"]
     volumes:
-      - ./backend:/app:delegated
+      - ./:/app:delegated
     environment:
       - DB_SCHEMA=partos_pat
       - DB_USER=akvo

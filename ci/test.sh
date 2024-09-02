@@ -35,7 +35,7 @@ then
 fi
 
 frontend_test () {
-    docker compose -f docker-compose.yml run \
+    docker compose -f docker-compose.test.yml run \
        --rm \
        --no-deps \
        frontend \
@@ -44,7 +44,7 @@ frontend_test () {
 
 backend_test () {
     docker compose \
-        -f docker-compose.yml \
+        -f docker-compose.test.yml \
         run -T backend ./test.sh
 }
 
