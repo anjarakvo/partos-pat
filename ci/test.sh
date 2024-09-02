@@ -43,6 +43,7 @@ frontend_test () {
 }
 
 backend_test () {
+    cp -r .git ./backend/.git
     docker compose \
         -f docker-compose.yml \
         run -T backend ./test.sh
