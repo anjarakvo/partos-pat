@@ -170,7 +170,9 @@ const RegisterForm = () => {
           </button>
         </div>
         <Modal
-          title={t("checkboxAgreementLink")}
+          title={tc("passwordStrength", {
+            progress: `${checkedList.length}/${checkBoxOptions.length}`,
+          })}
           open={openPasswordCheck}
           onOk={() => setOpenPasswordCheck(false)}
           onCancel={() => setOpenPasswordCheck(false)}
