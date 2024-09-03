@@ -86,14 +86,30 @@ const RegisterForm = () => {
           variant="borderless"
         />
       </Form.Item>
-      <Form.Item name="gender">
+      <Form.Item
+        name="gender"
+        rules={[
+          {
+            required: true,
+            message: tc("genderRequired"),
+          },
+        ]}
+      >
         <Select
           placeholder={t("gender")}
           options={genderOptions}
           variant="borderless"
         />
       </Form.Item>
-      <Form.Item name="country">
+      <Form.Item
+        name="country"
+        rules={[
+          {
+            required: true,
+            message: tc("countryRequired"),
+          },
+        ]}
+      >
         <Select
           placeholder={t("country")}
           options={countryOptions}
@@ -158,32 +174,32 @@ const RegisterForm = () => {
           onChange={onChangePassword}
           variant="borderless"
         />
-        <div className="w-full flex items-center justify-end">
-          <button
-            type="button"
-            onClick={() => setOpenPasswordCheck(true)}
-            className="text-sm italic text-dark-3"
-          >
-            {tc("passwordStrength", {
-              progress: `${checkedList.length}/${checkBoxOptions.length}`,
-            })}
-          </button>
-        </div>
-        <Modal
-          title={tc("passwordStrength", {
+      </Form.Item>
+      <div className="w-full flex items-center justify-end mt-[-12px] mb-2">
+        <button
+          type="button"
+          onClick={() => setOpenPasswordCheck(true)}
+          className="text-sm italic text-dark-3"
+        >
+          {tc("passwordStrength", {
             progress: `${checkedList.length}/${checkBoxOptions.length}`,
           })}
-          open={openPasswordCheck}
-          onOk={() => setOpenPasswordCheck(false)}
-          onCancel={() => setOpenPasswordCheck(false)}
-          closable
-        >
-          <Checkbox.Group
-            options={checkBoxOptions.map((x) => x.name)}
-            value={checkedList}
-          />
-        </Modal>
-      </Form.Item>
+        </button>
+      </div>
+      <Modal
+        title={tc("passwordStrength", {
+          progress: `${checkedList.length}/${checkBoxOptions.length}`,
+        })}
+        open={openPasswordCheck}
+        onOk={() => setOpenPasswordCheck(false)}
+        onCancel={() => setOpenPasswordCheck(false)}
+        closable
+      >
+        <Checkbox.Group
+          options={checkBoxOptions.map((x) => x.name)}
+          value={checkedList}
+        />
+      </Modal>
       <Form.Item
         name="confirm_password"
         dependencies={["password"]}
