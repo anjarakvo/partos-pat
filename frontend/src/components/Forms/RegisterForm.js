@@ -1,8 +1,14 @@
 "use client";
 import { useState } from "react";
-import { Button, Checkbox, Form, Input, Modal, Select } from "antd";
+import { Button, Checkbox, Form, Input, Modal, Select, Tooltip } from "antd";
 import { useTranslations } from "next-intl";
-import { Envelope, Eye, EyeSlash, UserCircle } from "@/components/Icons";
+import {
+  Envelope,
+  Eye,
+  EyeSlash,
+  UserCircle,
+  WarningCicle,
+} from "@/components/Icons";
 import { GENDER, PURPOSE_OF_ACCOUNT } from "@/static/config";
 
 import countryOptions from "../../../i18n/countries.json";
@@ -70,193 +76,228 @@ const RegisterForm = () => {
 
   return (
     <Form name="register" form={form} onFinish={onFinish}>
-      <Form.Item
-        name="fullname"
-        rules={[
-          {
-            required: true,
-            message: tc("fullNameRequired"),
-          },
-        ]}
-      >
-        <Input
-          placeholder={t("fullName")}
-          prefix={<UserCircle />}
-          variant="borderless"
-        />
-      </Form.Item>
-      <Form.Item
-        name="gender"
-        rules={[
-          {
-            required: true,
-            message: tc("genderRequired"),
-          },
-        ]}
-      >
-        <Select
-          placeholder={t("gender")}
-          options={genderOptions}
-          variant="borderless"
-        />
-      </Form.Item>
-      <Form.Item
-        name="country"
-        rules={[
-          {
-            required: true,
-            message: tc("countryRequired"),
-          },
-        ]}
-      >
-        <Select
-          placeholder={t("country")}
-          options={countryOptions}
-          fieldNames={{ label: "name", value: "alpha-2" }}
-          optionFilterProp="name"
-          variant="borderless"
-          showSearch
-          allowClear
-        />
-      </Form.Item>
-      <Form.Item
-        name="purpose_account"
-        rules={[
-          {
-            required: true,
-            message: tc("purposeAccountRequired"),
-          },
-        ]}
-      >
-        <Select
-          placeholder={t("purposeAccount")}
-          options={purposeOptions}
-          variant="borderless"
-        />
-      </Form.Item>
-      <Form.Item
-        name="email"
-        rules={[
-          {
-            required: true,
-            type: "email",
-            message: tc("emailRequired"),
-          },
-        ]}
-      >
-        <Input
-          placeholder={t("email")}
-          type="email"
-          prefix={<Envelope />}
-          variant="borderless"
-        />
-      </Form.Item>
-      <Form.Item
-        name="password"
-        rules={[
-          {
-            required: true,
-          },
-          () => ({
-            validator() {
-              if (checkedList.length === checkBoxOptions.length) {
-                return Promise.resolve();
+      {(_, formInstance) => {
+        return (
+          <>
+            <Form.Item
+              name="fullname"
+              rules={[
+                {
+                  required: true,
+                  message: tc("fullNameRequired"),
+                },
+              ]}
+            >
+              <Input
+                placeholder={t("fullName")}
+                prefix={<UserCircle />}
+                variant="borderless"
+              />
+            </Form.Item>
+            <Form.Item
+              name="gender"
+              rules={[
+                {
+                  required: true,
+                  message: tc("genderRequired"),
+                },
+              ]}
+            >
+              <Select
+                placeholder={t("gender")}
+                options={genderOptions}
+                variant="borderless"
+              />
+            </Form.Item>
+            <Form.Item
+              name="country"
+              rules={[
+                {
+                  required: true,
+                  message: tc("countryRequired"),
+                },
+              ]}
+            >
+              <Select
+                placeholder={t("country")}
+                options={countryOptions}
+                fieldNames={{ label: "name", value: "alpha-2" }}
+                optionFilterProp="name"
+                variant="borderless"
+                showSearch
+                allowClear
+              />
+            </Form.Item>
+            <Form.Item
+              name="purpose_account"
+              rules={[
+                {
+                  required: true,
+                  message: tc("purposeAccountRequired"),
+                },
+              ]}
+            >
+              <Select
+                placeholder={t("purposeAccount")}
+                options={purposeOptions}
+                variant="borderless"
+              />
+            </Form.Item>
+            <Form.Item
+              name="email"
+              rules={[
+                {
+                  required: true,
+                  type: "email",
+                  message: tc("emailRequired"),
+                },
+              ]}
+            >
+              <Input
+                placeholder={t("email")}
+                type="email"
+                prefix={<Envelope />}
+                variant="borderless"
+              />
+            </Form.Item>
+            <Form.Item
+              name="password"
+              rules={[
+                {
+                  required: true,
+                },
+                () => ({
+                  validator() {
+                    if (checkedList.length === checkBoxOptions.length) {
+                      return Promise.resolve();
+                    }
+                    return Promise.reject(
+                      new Error(tc("passwordCriteriaError"))
+                    );
+                  },
+                }),
+              ]}
+              hasFeedback={false}
+              help={
+                <div className="w-full flex flex-col lg:flex-row lg:items-center lg:justify-between py-2">
+                  <div>
+                    {formInstance.getFieldError("password").map((err, ex) => (
+                      <Tooltip
+                        key={ex}
+                        title={
+                          <ul>
+                            {checkBoxOptions.map((cb, cbx) => (
+                              <li key={cbx}>
+                                {checkedList.includes(cb.name) ? "✅" : "❌"}
+                                {` ${cb.name}`}
+                              </li>
+                            ))}
+                          </ul>
+                        }
+                      >
+                        <span className="float-left">{err}</span>
+                        <span className="float-left ml-1 py-1">
+                          <WarningCicle size={14} />
+                        </span>
+                      </Tooltip>
+                    ))}
+                  </div>
+                  <div>
+                    <button
+                      type="button"
+                      onClick={() => setOpenPasswordCheck(true)}
+                      className="text-sm italic text-dark-3"
+                    >
+                      {tc("passwordStrength", {
+                        progress: `${checkedList.length}/${checkBoxOptions.length}`,
+                      })}
+                    </button>
+                  </div>
+                </div>
               }
-              return Promise.reject(new Error(tc("passwordCriteriaError")));
-            },
-          }),
-        ]}
-        hasFeedback
-      >
-        <InputPassword
-          placeholder={t("password")}
-          onChange={onChangePassword}
-          variant="borderless"
-        />
-      </Form.Item>
-      <div className="w-full flex items-center justify-end mt-[-12px] mb-2">
-        <button
-          type="button"
-          onClick={() => setOpenPasswordCheck(true)}
-          className="text-sm italic text-dark-3"
-        >
-          {tc("passwordStrength", {
-            progress: `${checkedList.length}/${checkBoxOptions.length}`,
-          })}
-        </button>
-      </div>
-      <Modal
-        title={tc("passwordStrength", {
-          progress: `${checkedList.length}/${checkBoxOptions.length}`,
-        })}
-        open={openPasswordCheck}
-        onOk={() => setOpenPasswordCheck(false)}
-        onCancel={() => setOpenPasswordCheck(false)}
-        closable
-      >
-        <Checkbox.Group
-          options={checkBoxOptions.map((x) => x.name)}
-          value={checkedList}
-        />
-      </Modal>
-      <Form.Item
-        name="confirm_password"
-        dependencies={["password"]}
-        hasFeedback
-        rules={[
-          {
-            required: true,
-            message: tc("confirmPasswordRequired"),
-          },
-          ({ getFieldValue }) => ({
-            validator(_, value) {
-              if (!value || getFieldValue("password") === value) {
-                return Promise.resolve();
-              }
-              return Promise.reject(new Error(tc("passwordMatchError")));
-            },
-          }),
-        ]}
-      >
-        <InputPassword
-          placeholder={t("confirmPassword")}
-          variant="borderless"
-          disabled={checkBoxOptions.length != checkedList.length}
-        />
-      </Form.Item>
-      <Form.Item
-        name="agreement"
-        valuePropName="checked"
-        rules={[
-          {
-            validator: (_, value) =>
-              value
-                ? Promise.resolve()
-                : Promise.reject(new Error(tc("checkAgreementRequired"))),
-          },
-        ]}
-      >
-        <Checkbox>
-          <span>{t("checkboxAgreement")}</span>
-          <button
-            type="button"
-            className="text-blue underline font-bold ml-1"
-            onClick={() => setOpenTerms(true)}
-          >
-            {t("checkboxAgreementLink")}
-          </button>
-        </Checkbox>
-      </Form.Item>
-      <Modal
-        title={t("checkboxAgreementLink")}
-        open={openTerms}
-        onOk={() => setOpenTerms(false)}
-        onCancel={() => setOpenTerms(false)}
-        closable
-      />
-      <SubmitButton form={form} block>
-        {t("btnCreateAccount")}
-      </SubmitButton>
+            >
+              <InputPassword
+                placeholder={t("password")}
+                onChange={onChangePassword}
+                variant="borderless"
+                className="min-h-10"
+              />
+            </Form.Item>
+            <Modal
+              title={tc("passwordStrength", {
+                progress: `${checkedList.length}/${checkBoxOptions.length}`,
+              })}
+              open={openPasswordCheck}
+              onOk={() => setOpenPasswordCheck(false)}
+              onCancel={() => setOpenPasswordCheck(false)}
+              closable
+            >
+              <Checkbox.Group
+                options={checkBoxOptions.map((x) => x.name)}
+                value={checkedList}
+              />
+            </Modal>
+            <Form.Item
+              name="confirm_password"
+              dependencies={["password"]}
+              hasFeedback
+              rules={[
+                {
+                  required: true,
+                  message: tc("confirmPasswordRequired"),
+                },
+                ({ getFieldValue }) => ({
+                  validator(_, value) {
+                    if (!value || getFieldValue("password") === value) {
+                      return Promise.resolve();
+                    }
+                    return Promise.reject(new Error(tc("passwordMatchError")));
+                  },
+                }),
+              ]}
+            >
+              <InputPassword
+                placeholder={t("confirmPassword")}
+                variant="borderless"
+                disabled={checkBoxOptions.length != checkedList.length}
+              />
+            </Form.Item>
+            <Form.Item
+              name="agreement"
+              valuePropName="checked"
+              rules={[
+                {
+                  validator: (_, value) =>
+                    value
+                      ? Promise.resolve()
+                      : Promise.reject(new Error(tc("checkAgreementRequired"))),
+                },
+              ]}
+            >
+              <Checkbox>
+                <span>{t("checkboxAgreement")}</span>
+                <button
+                  type="button"
+                  className="text-blue underline font-bold ml-1"
+                  onClick={() => setOpenTerms(true)}
+                >
+                  {t("checkboxAgreementLink")}
+                </button>
+              </Checkbox>
+            </Form.Item>
+            <Modal
+              title={t("checkboxAgreementLink")}
+              open={openTerms}
+              onOk={() => setOpenTerms(false)}
+              onCancel={() => setOpenTerms(false)}
+              closable
+            />
+            <SubmitButton form={form} block>
+              {t("btnCreateAccount")}
+            </SubmitButton>
+          </>
+        );
+      }}
     </Form>
   );
 };
