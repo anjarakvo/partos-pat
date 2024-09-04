@@ -40,6 +40,7 @@
     "purposeOfAccount6": "Other",
     "countryRequired": "Please select your country",
     "genderRequired": "Please select your gender",
-    "passwordStrength": "Password Strength: {progress} criteria met"
+    "passwordStrength": "Password Strength: {progress} criteria met",
+    "checkAgreementRequired": "Please review and check the agreement"
   }
 }
