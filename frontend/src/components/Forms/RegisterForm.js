@@ -7,6 +7,7 @@ import { GENDER, PURPOSE_OF_ACCOUNT } from "@/static/config";
 
 import countryOptions from "../../../i18n/countries.json";
 import { useRouter } from "@/routing";
+import SubmitButton from "../SubmitButton";
 
 const InputPassword = (props) => {
   const [visible, setVisible] = useState(false);
@@ -24,12 +25,14 @@ const InputPassword = (props) => {
   );
 };
 
+const { useForm } = Form;
+
 const RegisterForm = () => {
-  const [isChecked, setIsChecked] = useState(false);
   const [checkedList, setCheckedList] = useState([]);
   const [openTerms, setOpenTerms] = useState(false);
   const [openPasswordCheck, setOpenPasswordCheck] = useState(false);
   const router = useRouter();
+  const [form] = useForm();
 
   const t = useTranslations("Register");
   const tc = useTranslations("common");
@@ -70,7 +73,7 @@ const RegisterForm = () => {
   };
 
   return (
-    <Form onFinish={onFinish}>
+    <Form name="register" form={form} onFinish={onFinish}>
       <Form.Item
         name="fullname"
         rules={[
@@ -222,13 +225,22 @@ const RegisterForm = () => {
         <InputPassword
           placeholder={t("confirmPassword")}
           variant="borderless"
+          disabled={checkBoxOptions.length != checkedList.length}
         />
       </Form.Item>
-      <div className="mb-4">
-        <Checkbox
-          checked={isChecked}
-          onChange={(e) => setIsChecked(e.target.checked)}
-        >
+      <Form.Item
+        name="agreement"
+        valuePropName="checked"
+        rules={[
+          {
+            validator: (_, value) =>
+              value
+                ? Promise.resolve()
+                : Promise.reject(new Error(tc("checkAgreementRequired"))),
+          },
+        ]}
+      >
+        <Checkbox>
           <span>{t("checkboxAgreement")}</span>
           <button
             type="button"
@@ -238,18 +250,17 @@ const RegisterForm = () => {
             {t("checkboxAgreementLink")}
           </button>
         </Checkbox>
-        <Modal
-          title={t("checkboxAgreementLink")}
-          open={openTerms}
-          onOk={() => setOpenTerms(false)}
-          onCancel={() => setOpenTerms(false)}
-          closable
-        />
-      </div>
-
-      <Button type="primary" htmlType="submit" disabled={!isChecked} block>
+      </Form.Item>
+      <Modal
+        title={t("checkboxAgreementLink")}
+        open={openTerms}
+        onOk={() => setOpenTerms(false)}
+        onCancel={() => setOpenTerms(false)}
+        closable
+      />
+      <SubmitButton form={form} block>
         {t("btnCreateAccount")}
-      </Button>
+      </SubmitButton>
     </Form>
   );
 };
