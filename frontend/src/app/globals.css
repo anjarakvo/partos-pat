@@ -42,7 +42,8 @@
     padding: 10px;
     border-bottom: 0.5px solid rgba(var(--border-input-rgba));
   }
-  .ant-input-affix-wrapper .ant-input {
+  .ant-input-affix-wrapper .ant-input,
+  .ant-input-group .ant-input {
     padding: 10px;
     border-bottom: 1px solid rgba(var(--border-input-rgba));
   }
