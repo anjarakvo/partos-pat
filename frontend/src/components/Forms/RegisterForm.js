@@ -48,10 +48,6 @@ const RegisterForm = () => {
   const checkBoxOptions = [
     { name: tc("passwordRule1"), re: /[a-z]/ },
     { name: tc("passwordRule2"), re: /\d/ },
-    {
-      name: tc("passwordRule3"),
-      re: /[-._!`'#%&,:;<>=@{}~$()*+/?[\]^|]/,
-    },
     { name: tc("passwordRule4"), re: /[A-Z]/ },
     { name: tc("passwordRule5"), re: /^\S*$/ },
     { name: tc("passwordRule6"), re: /(?=.{8,})/ },
@@ -163,7 +159,7 @@ const RegisterForm = () => {
           },
           () => ({
             validator() {
-              if (checkedList.length === 6) {
+              if (checkedList.length === checkBoxOptions.length) {
                 return Promise.resolve();
               }
               return Promise.reject(new Error(tc("passwordCriteriaError")));
