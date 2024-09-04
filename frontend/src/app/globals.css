@@ -6,6 +6,82 @@
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
+  --primary-dark: #ff9c00;
+  --ant-input-affix-rgba: 236, 241, 245, 0.9;
+  --box-shadow-rgba: 0, 0, 0, 0.22;
+  --button-text: #1e1e1e;
+  --button-text-hover: #301d00;
+  --button-color-disabled: #8b8b8b;
+  --button-bg-disabled: #d9d9d9;
+  --border-input-rgba: 139, 139, 139, 0.5;
+  --input-bg-disabled: #d9d9d9;
+  --input-color-disabled: #8b8b8b;
+
+  .ant-input-affix-wrapper {
+    padding: 0;
+  }
+  .ant-input-affix-wrapper .ant-input-prefix {
+    padding: 14px;
+    background-color: rgba(var(--ant-input-affix-rgba));
+    margin-inline-end: 0;
+  }
+  .ant-select-single,
+  .ant-select {
+    height: auto;
+  }
+  .ant-select .ant-select-arrow {
+    background-color: rgba(var(--ant-input-affix-rgba));
+    height: auto;
+    top: 30%;
+    right: 0;
+  }
+  .ant-select .ant-select-arrow .anticon {
+    padding: 14px;
+  }
+  .ant-select-single:not(.ant-select-customize-input) .ant-select-selector {
+    padding: 10px;
+    border-bottom: 0.5px solid rgba(var(--border-input-rgba));
+  }
+  .ant-input-affix-wrapper .ant-input,
+  .ant-input-group .ant-input {
+    padding: 10px;
+    border-bottom: 1px solid rgba(var(--border-input-rgba));
+  }
+  .ant-input-affix-wrapper .ant-input.ant-input-disabled {
+    background-color: var(--input-bg-disabled);
+    color: var(--input-color-disabled);
+    cursor: not-allowed;
+  }
+  .ant-input-affix-wrapper .ant-input:not(.ant-input-disabled):hover,
+  .ant-input-affix-wrapper .ant-input:not(.ant-input-disabled):active,
+  .ant-input-affix-wrapper .ant-input:not(.ant-input-disabled):focus-visible {
+    border-bottom: 1px solid var(--primary-dark);
+  }
+  .ant-input-group .ant-input-group-addon {
+    padding: 0;
+    background-color: rgba(var(--ant-input-affix-rgba));
+  }
+  .ant-input-group .ant-input-group-addon .ant-btn-link,
+  .ant-input-group .ant-input-group-addon .ant-btn-link:hover,
+  .ant-input-group .ant-input-group-addon .ant-btn-link:active {
+    color: var(--button-text);
+  }
+  .ant-btn:not(.ant-btn-link) {
+    height: auto;
+    color: var(--button-text);
+    box-shadow: 0px 4px 34px 0px rgba(var(--box-shadow-rgba));
+    font-weight: 600;
+    line-height: 24px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+  }
+  .ant-btn:hover {
+    color: var(--button-text-hover);
+  }
+  .ant-btn:disabled {
+    color: var(--button-color-disabled);
+    background-color: var(--button-bg-disabled);
+  }
 }
 
 @media (prefers-color-scheme: dark) {

@@ -19,6 +19,7 @@ services:
     command: ["./start.sh"]
     volumes:
       - ./backend:/app:delegated
+      - ./i18n:/app/i18n:delegated
     environment:
       - DB_SCHEMA=partos_pat
       - DB_USER=akvo
@@ -35,6 +36,7 @@ services:
     command: ["./start.sh"]
     volumes:
       - ./frontend:/app:delegated
+      - ./i18n:/app/i18n:delegated
     working_dir: /app
     depends_on:
       - backend

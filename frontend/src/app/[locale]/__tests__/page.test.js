@@ -1,10 +1,22 @@
 import "@testing-library/jest-dom";
 import { render, screen } from "@testing-library/react";
+import { NextIntlClientProvider } from "next-intl";
+
 import Home from "../page";
+
+const messages = {
+  Register: {
+    btnCreateAccount: "Create account",
+  },
+};
 
 describe("HomePage", () => {
   it("renders a default page nextjs", () => {
-    render(<Home />);
+    render(
+      <NextIntlClientProvider locale="en" messages={messages}>
+        <Home />
+      </NextIntlClientProvider>
+    );
 
     const nextjsLogo = screen.getByAltText("Next.js Logo");
 
@@ -12,7 +24,11 @@ describe("HomePage", () => {
   });
 
   it("renders correctly & match with the snapshot", () => {
-    const { container } = render(<Home />);
+    const { container } = render(
+      <NextIntlClientProvider locale="en" messages={messages}>
+        <Home />
+      </NextIntlClientProvider>
+    );
     expect(container).toMatchSnapshot();
   });
 });
