@@ -28,11 +28,6 @@ jobs:
           cp src/i18n src/frontend/ -R
         shell: bash
 
-      - name: List files
-        run: |
-          ls -la src/frontend/i18n
-        shell: bash
-
       - name: Prepare Frontend Build
         run: |
           mv src/frontend/next.config.prod.mjs src/frontend/next.config.mjs
