@@ -23,9 +23,14 @@ jobs:
           path: composite-actions
           ref: main
 
+      - name: Copy i18n
+        run: |
+          cp src/i18n src/frontend/ -R
+        shell: bash
+
       - name: List files
         run: |
-          ls -la src/backend
+          ls -la src/frontend/i18n
         shell: bash
 
       - name: Prepare Frontend Build
